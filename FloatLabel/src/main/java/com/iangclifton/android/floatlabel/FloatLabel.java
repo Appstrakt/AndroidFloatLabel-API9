@@ -352,7 +352,7 @@ public class FloatLabel extends FrameLayout {
         final CharSequence text;
         final CharSequence hint;
         final ColorStateList hintColor;
-        final int floatLabelColor;
+        final int floatLabelColor, textColor;
         final int inputType;
 
         if (attrs == null) {
@@ -362,6 +362,7 @@ public class FloatLabel extends FrameLayout {
             hintColor = null;
             floatLabelColor = 0;
             inputType = 0;
+            textColor = 0;
         } else {
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FloatLabel, defStyle, 0);
 
@@ -369,8 +370,8 @@ public class FloatLabel extends FrameLayout {
             text = a.getText(R.styleable.FloatLabel_android_text);
             hint = a.getText(R.styleable.FloatLabel_android_hint);
             hintColor = a.getColorStateList(R.styleable.FloatLabel_android_textColorHint);
-            floatLabelColor = a.getColor(R.styleable.FloatLabel_floatLabelColor,
-                    0);
+            floatLabelColor = a.getColor(R.styleable.FloatLabel_floatLabelColor, 0);
+            textColor = a.getColor(R.styleable.FloatLabel_android_textColor, 0);
             inputType = a.getInt(R.styleable.FloatLabel_android_inputType,InputType.TYPE_CLASS_TEXT);
             a.recycle();
         }
@@ -389,7 +390,10 @@ public class FloatLabel extends FrameLayout {
         if (!TextUtils.isEmpty(text)) {
             mEditText.setText(text);
         }
-        
+
+        if(textColor != 0) {
+            mEditText.setTextColor(textColor);
+        }
         if (hintColor != null) {
             mEditText.setHintTextColor(hintColor);
         }
