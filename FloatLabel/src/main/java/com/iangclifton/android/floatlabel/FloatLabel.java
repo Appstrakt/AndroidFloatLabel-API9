@@ -354,6 +354,9 @@ public class FloatLabel extends FrameLayout {
         final ColorStateList hintColor;
         final int floatLabelColor, textColor;
         final int inputType;
+        final int editTextBackground;
+        final int nextFocusUp, nextFocusDown, nextFocusRight, nextFocusLeft, nextFocusForward;
+        final int imeOptions;
 
         if (attrs == null) {
             layout = R.layout.float_label;
@@ -363,16 +366,31 @@ public class FloatLabel extends FrameLayout {
             floatLabelColor = 0;
             inputType = 0;
             textColor = 0;
+            editTextBackground = 0;
+            nextFocusDown = 0;
+            nextFocusForward = 0;
+            nextFocusLeft = 0;
+            nextFocusRight = 0;
+            nextFocusUp = 0;
+            imeOptions = 0;
         } else {
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FloatLabel, defStyle, 0);
 
             layout = a.getResourceId(R.styleable.FloatLabel_android_layout, R.layout.float_label);
+            editTextBackground = a.getResourceId(R.styleable.FloatLabel_editTextBackground, 0);
             text = a.getText(R.styleable.FloatLabel_android_text);
             hint = a.getText(R.styleable.FloatLabel_android_hint);
             hintColor = a.getColorStateList(R.styleable.FloatLabel_android_textColorHint);
             floatLabelColor = a.getColor(R.styleable.FloatLabel_floatLabelColor, 0);
             textColor = a.getColor(R.styleable.FloatLabel_android_textColor, 0);
-            inputType = a.getInt(R.styleable.FloatLabel_android_inputType,InputType.TYPE_CLASS_TEXT);
+            inputType = a.getInt(R.styleable.FloatLabel_android_inputType,
+                InputType.TYPE_CLASS_TEXT);
+            imeOptions = a.getInt(R.styleable.FloatLabel_android_imeOptions, 0);
+            nextFocusDown = a.getResourceId(R.styleable.FloatLabel_android_nextFocusDown, 0);
+            nextFocusForward = a.getResourceId(R.styleable.FloatLabel_android_nextFocusForward, 0);
+            nextFocusUp = a.getResourceId(R.styleable.FloatLabel_android_nextFocusUp, 0);
+            nextFocusLeft = a.getResourceId(R.styleable.FloatLabel_android_nextFocusLeft, 0);
+            nextFocusRight = a.getResourceId(R.styleable.FloatLabel_android_nextFocusRight, 0);
             a.recycle();
         }
 
@@ -382,7 +400,7 @@ public class FloatLabel extends FrameLayout {
             throw new RuntimeException(
                     "Your layout must have an EditText whose ID is @id/edit_text");
         }
-        
+
         if (!TextUtils.isEmpty(hint)) {
             mEditText.setHint(hint);
         }
@@ -399,6 +417,27 @@ public class FloatLabel extends FrameLayout {
         }
         if (inputType != 0){
             mEditText.setInputType(inputType);
+        }
+        if(editTextBackground != 0) {
+            mEditText.setBackgroundResource(editTextBackground);
+        }
+        if(imeOptions != 0) {
+            mEditText.setImeOptions(imeOptions);
+        }
+        if(nextFocusDown != 0) {
+            mEditText.setNextFocusDownId(nextFocusDown);
+        }
+        if(nextFocusForward != 0 && Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
+            mEditText.setNextFocusForwardId(nextFocusForward);
+        }
+        if(nextFocusUp != 0) {
+            mEditText.setNextFocusUpId(nextFocusUp);
+        }
+        if(nextFocusRight != 0) {
+            mEditText.setNextFocusRightId(nextFocusRight);
+        }
+        if(nextFocusLeft != 0) {
+            mEditText.setNextFocusLeftId(nextFocusLeft);
         }
 
         mLabel = (TextView) findViewById(R.id.float_label);
