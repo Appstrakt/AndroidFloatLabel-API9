@@ -17,11 +17,11 @@ dependencies {
 }
 
 android {
-    compileSdkVersion project.hasProperty("android_build_compileSdkVersion") ? Integer.parseInt(project.android_build_compileSdkVersion) : 19
-    buildToolsVersion project.hasProperty("android_build_buildToolsVersion") ? project.android_build_buildToolsVersion : '19.0.1'
+    compileSdkVersion getBuildSetting('compileSdkVersion')
+    buildToolsVersion getBuildSetting('buildToolsVersion')
 
     defaultConfig {
-        minSdkVersion project.hasProperty("android_build_minSdkVersion") ? Integer.parseInt(project.android_build_minSdkVersion) : 8
-        targetSdkVersion project.hasProperty("android_build_targetSdkVersion") ? Integer.parseInt(project.android_build_targetSdkVersion) : 19
+        minSdkVersion getBuildSetting('minSdkVersion')
+        targetSdkVersion getBuildSetting('targetSdkVersion')
     }
 }
